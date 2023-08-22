@@ -24,5 +24,18 @@ namespace Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPost, Route("consult")]
+        public IActionResult ConsultBankSlip(ConsultRequest request)
+        {
+            try
+            {
+                return Ok(_bankSlipService.ConsultBankSlip(request));
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

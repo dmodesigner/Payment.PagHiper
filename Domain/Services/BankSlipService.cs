@@ -1,10 +1,13 @@
-﻿using Domain.Interfaces.Services;
+﻿using Domain.Customizations;
+using Domain.Interfaces.Services;
 using Domain.Models;
 using Domain.Requests;
 using Domain.Responses;
 using Microsoft.Extensions.Options;
+using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Domain.Services
 {
@@ -14,13 +17,18 @@ namespace Domain.Services
 
         public BankSlipService(IOptions<UrlModel> url) => _url = url.Value;
 
+        private void ValidateApiKey(string apiKey)
+        {
+            if (string.IsNullOrEmpty(apiKey) || apiKey.Length < 4 || apiKey.Substring(0, 4) != "apk_")
+                throw new ArgumentException("A chave de API não pode ser nula ou vazia. Ou esta invalida.");
+        }
+
         private void Validate(BankSlipRequest request)
         {
             if (request == null)
                 throw new ArgumentException("O objeto para criação do boleto não pode ser nulo");
 
-            if (string.IsNullOrEmpty(request.ApiKey) || request.ApiKey.Length < 4 || request.ApiKey.Substring(0, 4) != "apk_")
-                throw new ArgumentException("A chave de API não pode ser nula ou vazia. Ou esta invalida.");
+            ValidateApiKey(request.ApiKey);
 
             if (string.IsNullOrEmpty(request.OrderId))
                 throw new ArgumentException("O ID do pedido não pode ser nulo ou vazio.");
@@ -63,6 +71,20 @@ namespace Domain.Services
                 throw new ArgumentException("O valor total do boleto não pode ser menor que R$ 3,00.");
         }
 
+        private void ValidateQuery(ConsultRequest request)
+        {
+            if (request == null)
+                throw new ArgumentException("O objeto para consultar o boleto não pode ser nulo");
+
+            ValidateApiKey(request.ApiKey);
+
+            if (string.IsNullOrEmpty(request.Token))
+                throw new ArgumentException("O token do boleto não pode ser nulo ou vazio.");
+
+            if (string.IsNullOrEmpty(request.TransactionId))
+                throw new ArgumentException("O ID da transação não pode ser nulo ou vazio.");
+        }
+
         private async Task<BankSlipResponse> Create(BankSlipRequest request)
         {
             var r = new CreateRequestResponse();
@@ -85,7 +107,35 @@ namespace Domain.Services
             if (r == null)
                 throw new ArgumentException("Não foi possível obter as informações do boleto. O retorno está vazio.");
 
-            return r.CreateRequest;
+            return r.BankSlipResponse;
+        }
+
+        private async Task<BankSlipResponse> Consult(ConsultRequest request)
+        {
+            var r = new StatusRequestResponse();
+
+            using (var httpClient = new HttpClient())
+            {
+                var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PostAsync(_url.ConsultBankSlip, content);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.Created)
+                    throw new ArgumentException("Ocorreu um erro ao consultar o boleto dentro do Pag Hiper.");
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                var serializeOptions = new JsonSerializerOptions();
+                serializeOptions.Converters.Add(new StringConverterCustomization());
+
+                r = JsonSerializer.Deserialize<StatusRequestResponse>(result, serializeOptions);
+            }
+
+
+            if (r == null)
+                throw new ArgumentException("Não foi possível obter as informações do boleto. O retorno está vazio.");
+
+            return r.BankSlipResponse;
         }
 
         public BankSlipResponse CreateBankSlip(BankSlipRequest request)
@@ -93,6 +143,13 @@ namespace Domain.Services
             Validate(request);
 
             return Create(request).Result;
+        }
+
+        public BankSlipResponse ConsultBankSlip(ConsultRequest request)
+        {
+            ValidateQuery(request);
+
+            return Consult(request).Result;
         }
     }
 }
