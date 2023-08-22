@@ -40,8 +40,12 @@ namespace Domain.Services
             if (request.Items == null || request.Items.Count == 0)
                 throw new ArgumentException("A lista de itens não pode ser nula ou vazia.");
 
+            var total = 0;
+
             foreach (var item in request.Items)
             {
+                total += item.PriceCents * item.Quantity;
+
                 if (string.IsNullOrEmpty(item.ItemId))
                     throw new ArgumentException("O ID do item não pode ser nulo ou vazio.");
 
@@ -54,6 +58,9 @@ namespace Domain.Services
                 if (item.Quantity < 1)
                     throw new ArgumentException("A quantidade do item não pode ser menor que 1.");
             }
+
+            if (total < 300)
+                throw new ArgumentException("O valor total do boleto não pode ser menor que R$ 3,00.");
         }
 
         private async Task<CreateBankSlipResponse> Create(BankSlipRequest request)
