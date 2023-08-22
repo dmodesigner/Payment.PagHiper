@@ -5,46 +5,46 @@ namespace Domain.Requests
     public class BankSlipRequest
     {
         [JsonPropertyName("apiKey")]
-        public string ApiKey { get; set; }
+        public string? ApiKey { get; set; }
 
         [JsonPropertyName("order_id")]
-        public string OrderId { get; set; }
+        public string? OrderId { get; set; }
 
         [JsonPropertyName("payer_email")]
-        public string PayerEmail { get; set; }
+        public string? PayerEmail { get; set; }
 
         [JsonPropertyName("payer_name")]
-        public string PayerName { get; set; }
+        public string? PayerName { get; set; }
 
         [JsonPropertyName("payer_cpf_cnpj")]
-        public string PayerCpfCnpj { get; set; }
+        public string? PayerCpfCnpj { get; set; }
 
         [JsonPropertyName("payer_phone")]
         public int PayerPhone { get; set; }
 
         [JsonPropertyName("payer_street")]
-        public string PayerStreet { get; set; }
+        public string? PayerStreet { get; set; }
 
         [JsonPropertyName("payer_number")]
         public int PayerNumber { get; set; }
 
         [JsonPropertyName("payer_complement")]
-        public string PayerComplement { get; set; }
+        public string? PayerComplement { get; set; }
 
         [JsonPropertyName("payer_district")]
-        public string PayerDistrict { get; set; }
+        public string? PayerDistrict { get; set; }
 
         [JsonPropertyName("payer_city")]
-        public string PayerCity { get; set; }
+        public string? PayerCity { get; set; }
 
         [JsonPropertyName("payer_state")]
-        public string PayerState { get; set; }
+        public string? PayerState { get; set; }
 
         [JsonPropertyName("payer_zip_code")]
         public int PayerZipCode { get; set; }
 
         [JsonPropertyName("notification_url")]
-        public string NotificationUrl { get; set; }
+        public string? NotificationUrl { get; set; }
 
         [JsonPropertyName("discount_cents")]
         public int DiscountCents { get; set; }
@@ -53,7 +53,7 @@ namespace Domain.Requests
         public int ShippingPriceCents { get; set; }
 
         [JsonPropertyName("shipping_methods")]
-        public string ShippingMethods { get; set; }
+        public string? ShippingMethods { get; set; }
 
         [JsonPropertyName("fixed_description")]
         public bool FixedDescription { get; set; }
@@ -65,6 +65,6 @@ namespace Domain.Requests
         public string TypeBankSlip { get => "boletoA4"; }
 
         [JsonPropertyName("items")]
-        public List<ItemRequest> Items { get; set; }
+        public List<ItemRequest>? Items { get; set; }
     }
 }
