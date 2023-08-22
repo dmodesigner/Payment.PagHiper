@@ -63,7 +63,7 @@ namespace Domain.Services
                 throw new ArgumentException("O valor total do boleto não pode ser menor que R$ 3,00.");
         }
 
-        private async Task<CreateBankSlipResponse> Create(BankSlipRequest request)
+        private async Task<BankSlipResponse> Create(BankSlipRequest request)
         {
             var r = new CreateRequestResponse();
 
@@ -88,7 +88,7 @@ namespace Domain.Services
             return r.CreateRequest;
         }
 
-        public CreateBankSlipResponse CreateBankSlip(BankSlipRequest request)
+        public BankSlipResponse CreateBankSlip(BankSlipRequest request)
         {
             Validate(request);
 

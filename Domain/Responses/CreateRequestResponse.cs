@@ -5,6 +5,6 @@ namespace Domain.Responses
     public class CreateRequestResponse
     {
         [JsonPropertyName("create_request")]
-        public CreateBankSlipResponse CreateRequest { get; set; }
+        public BankSlipResponse CreateRequest { get; set; }
     }
 }

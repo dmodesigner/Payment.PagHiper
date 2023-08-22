@@ -5,6 +5,6 @@ namespace Domain.Interfaces.Services
 {
     public interface IBankSlipService
     {
-        CreateBankSlipResponse CreateBankSlip(BankSlipRequest request);
+        BankSlipResponse CreateBankSlip(BankSlipRequest request);
     }
 }
