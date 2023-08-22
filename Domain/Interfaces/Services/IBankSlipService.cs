@@ -3,7 +3,7 @@ using Domain.Responses;
 
 namespace Domain.Interfaces.Services
 {
-    public interface IBankSlip
+    public interface IBankSlipService
     {
         CreateBankSlipResponse CreateBankSlip(BankSlipRequest request);
     }

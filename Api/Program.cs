@@ -1,4 +1,5 @@
 using Domain.Interfaces.Services;
+using Domain.Models;
 using Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,10 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region AppSettings
+
+builder.Services.Configure<UrlModel>(builder.Configuration.GetSection("Url"));
+
+#endregion
+
 #region IOC
 
 //Injeção de dependência de serviços
-builder.Services.AddScoped<IBankSlip, BankSlipService>();
+builder.Services.AddScoped<IBankSlipService, BankSlipService>();
 
 #endregion
 

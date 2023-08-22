@@ -26,12 +26,12 @@ namespace Domain.Responses
         public string OrderId { get; set; }
 
         [JsonPropertyName("due_date")]
-        public string DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         [JsonPropertyName("bank_slip")]
         public BankSlipResponse BankSlip { get; set; }
 
         [JsonPropertyName("http_code")]
-        public string HttpCode { get; set; }
+        public int HttpCode { get; set; }
     }
 }
