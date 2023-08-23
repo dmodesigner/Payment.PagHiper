@@ -8,5 +8,7 @@ namespace Domain.Interfaces.Services
         BankSlipResponse CreateBankSlip(BankSlipRequest request);
 
         BankSlipResponse ConsultBankSlip(ConsultRequest request);
+
+        BankSlipResponse CancelBankSlip(ConsultRequest request);
     }
 }

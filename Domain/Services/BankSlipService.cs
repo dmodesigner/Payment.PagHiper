@@ -1,13 +1,12 @@
-﻿using Domain.Customizations;
+﻿using Domain.Constants;
+using Domain.Customizations;
 using Domain.Interfaces.Services;
 using Domain.Models;
 using Domain.Requests;
 using Domain.Responses;
 using Microsoft.Extensions.Options;
-using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Domain.Services
 {
@@ -103,7 +102,6 @@ namespace Domain.Services
                 r = JsonSerializer.Deserialize<CreateRequestResponse>(result);
             }
 
-
             if (r == null)
                 throw new ArgumentException("Não foi possível obter as informações do boleto. O retorno está vazio.");
 
@@ -131,9 +129,32 @@ namespace Domain.Services
                 r = JsonSerializer.Deserialize<StatusRequestResponse>(result, serializeOptions);
             }
 
-
             if (r == null)
                 throw new ArgumentException("Não foi possível obter as informações do boleto. O retorno está vazio.");
+
+            return r.BankSlipResponse;
+        }
+
+        private async Task<BankSlipResponse> Cancel(ConsultRequest request)
+        {
+            var r = new CancellationResponse();
+
+            using (var httpClient = new HttpClient())
+            {
+                var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
+
+                var response = await httpClient.PostAsync(_url.CancelBankSlip, content);
+
+                if (response.StatusCode != System.Net.HttpStatusCode.Created)
+                    throw new ArgumentException("Ocorreu um erro ao cancelar o boleto dentro do Pag Hiper.");
+
+                var result = await response.Content.ReadAsStringAsync();
+
+                r = JsonSerializer.Deserialize<CancellationResponse>(result);
+            }
+
+            if (r == null)
+                throw new ArgumentException("Não foi possível obter as informações de cancelamento do boleto. O retorno está vazio.");
 
             return r.BankSlipResponse;
         }
@@ -150,6 +171,15 @@ namespace Domain.Services
             ValidateQuery(request);
 
             return Consult(request).Result;
+        }
+
+        public BankSlipResponse CancelBankSlip(ConsultRequest request)
+        {
+            ValidateQuery(request);
+
+            request.Status = TransactionStatusConstant.Canceled;
+
+            return Cancel(request).Result;
         }
     }
 }

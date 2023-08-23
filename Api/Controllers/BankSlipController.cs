@@ -37,5 +37,18 @@ namespace Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPost, Route("cancel")]
+        public IActionResult CancelBankSlip(ConsultRequest request)
+        {
+            try
+            {
+                return Ok(_bankSlipService.CancelBankSlip(request));
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

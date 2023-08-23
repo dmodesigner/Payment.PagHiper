@@ -10,6 +10,9 @@ namespace Domain.Requests
         [JsonPropertyName("apiKey")]
         public string? ApiKey { get; set; }
 
+        [JsonPropertyName("status")]
+        public string? Status { get; set; }
+
         [JsonPropertyName("transaction_id")]
         public string? TransactionId { get; set; }
     }
