@@ -1,4 +1,7 @@
-﻿namespace PagHiper.Interfaces.Services
+﻿using PagHiper.Requests;
+using PagHiper.Responses;
+
+namespace PagHiper.Interfaces.Services
 {
     public interface IBankSlipService
     {
