@@ -1,7 +1,6 @@
 ﻿using PagHiper.Constants;
 using PagHiper.Customizations;
 using PagHiper.Interfaces.Services;
-using PagHiper.Models;
 using PagHiper.Requests;
 using PagHiper.Responses;
 using System.Text;
