@@ -4,7 +4,7 @@ namespace PagHiper.Customizations
 {
     public class StringConverterCustomization : System.Text.Json.Serialization.JsonConverter<string>
     {
-        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
 
             if (reader.TokenType == JsonTokenType.Number)
