@@ -10,7 +10,7 @@ namespace PagHiper.Services
 {
     public class BankSlipService : IBankSlipService
     {
-        private void ValidateApiKey(string apiKey)
+        private void ValidateApiKey(string? apiKey)
         {
             if (string.IsNullOrEmpty(apiKey) || apiKey.Length < 4 || apiKey.Substring(0, 4) != "apk_")
                 throw new ArgumentException("A chave de API não pode ser nula ou vazia. Ou esta invalida.");
@@ -78,7 +78,7 @@ namespace PagHiper.Services
                 throw new ArgumentException("O ID da transação não pode ser nulo ou vazio.");
         }
 
-        private async Task<BankSlipResponse> Create(BankSlipRequest request)
+        private async Task<BankSlipResponse?> Create(BankSlipRequest request)
         {
             var r = new CreateRequestResponse();
 
@@ -102,7 +102,7 @@ namespace PagHiper.Services
             return r.BankSlipResponse;
         }
 
-        private async Task<BankSlipResponse> Consult(ConsultRequest request)
+        private async Task<BankSlipResponse?> Consult(ConsultRequest request)
         {
             var r = new StatusRequestResponse();
 
@@ -129,7 +129,7 @@ namespace PagHiper.Services
             return r.BankSlipResponse;
         }
 
-        private async Task<BankSlipResponse> Cancel(ConsultRequest request)
+        private async Task<BankSlipResponse?> Cancel(ConsultRequest request)
         {
             var r = new CancellationResponse();
 
@@ -157,14 +157,24 @@ namespace PagHiper.Services
         {
             Validate(request);
 
-            return Create(request).Result;
+            var r = Create(request).Result;
+
+            if (r == null)
+                throw new ArgumentException("Não foi possível obter os dados do boleto.");
+
+            return r;
         }
 
         public BankSlipResponse ConsultBankSlip(ConsultRequest request)
         {
             ValidateQuery(request);
 
-            return Consult(request).Result;
+            var r = Consult(request).Result;
+
+            if (r == null)
+                throw new ArgumentException("Não foi possível consultar os dados do boleto.");
+
+            return r;
         }
 
         public BankSlipResponse CancelBankSlip(ConsultRequest request)
@@ -173,7 +183,12 @@ namespace PagHiper.Services
 
             request.Status = TransactionStatusConstant.Canceled;
 
-            return Cancel(request).Result;
+            var r = Cancel(request).Result;
+
+            if (r == null)
+                throw new ArgumentException("Não foi possível obter o retorno do cancelamento do boleto.");
+
+            return r;
         }
     }
 }
