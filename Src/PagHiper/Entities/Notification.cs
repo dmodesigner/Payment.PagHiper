@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Requests
+namespace PagHiper.Entities
 {
-    public class NotificationRequest
+    public class Notification
     {
         [JsonPropertyName("apiKey")]
         public string? ApiKey { get; set; }

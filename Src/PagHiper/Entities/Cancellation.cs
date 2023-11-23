@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Responses
+namespace PagHiper.Entities
 {
-    public class StatusRequestResponse
+    public class Cancellation
     {
-        [JsonPropertyName("status_request")]
+        [JsonPropertyName("cancellation_request")]
         public BankSlipResponse? BankSlipResponse { get; set; }
     }
 }

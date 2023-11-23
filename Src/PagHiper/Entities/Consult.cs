@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Requests
+namespace PagHiper.Entities
 {
-    public class ConsultRequest
+    public class Consult
     {
         [JsonPropertyName("token")]
         public string? Token { get; set; }

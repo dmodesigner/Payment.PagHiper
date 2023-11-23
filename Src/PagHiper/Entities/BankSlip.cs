@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Responses
+namespace PagHiper.Entities
 {
-    public class BankSlipInfoResponse
+    public class BankSlip
     {
         [JsonPropertyName("digitable_line")]
         public string? DigitableLine { get; set; }

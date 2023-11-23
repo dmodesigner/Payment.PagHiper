@@ -1,8 +1,7 @@
 ﻿using PagHiper.Constants;
 using PagHiper.Customizations;
+using PagHiper.Entities;
 using PagHiper.Interfaces.Services;
-using PagHiper.Requests;
-using PagHiper.Responses;
 using System.Text;
 using System.Text.Json;
 
@@ -64,7 +63,7 @@ namespace PagHiper.Services
                 throw new ArgumentException("O valor total do boleto não pode ser menor que R$ 3,00.");
         }
 
-        private void ValidateQuery(ConsultRequest request)
+        private void ValidateQuery(Consult request)
         {
             if (request == null)
                 throw new ArgumentException("O objeto para consultar o boleto não pode ser nulo");
@@ -80,7 +79,7 @@ namespace PagHiper.Services
 
         private async Task<BankSlipResponse?> Create(BankSlipRequest request)
         {
-            var r = new CreateRequestResponse();
+            var r = new Create();
 
             using (var httpClient = new HttpClient())
             {
@@ -93,7 +92,7 @@ namespace PagHiper.Services
 
                 var result = await response.Content.ReadAsStringAsync();
 
-                r = JsonSerializer.Deserialize<CreateRequestResponse>(result);
+                r = JsonSerializer.Deserialize<Create>(result);
             }
 
             if (r == null)
@@ -102,9 +101,9 @@ namespace PagHiper.Services
             return r.BankSlipResponse;
         }
 
-        private async Task<BankSlipResponse?> Consult(ConsultRequest request)
+        private async Task<BankSlipResponse?> Consult(Consult request)
         {
-            var r = new StatusRequestResponse();
+            var r = new Status();
 
             using (var httpClient = new HttpClient())
             {
@@ -120,7 +119,7 @@ namespace PagHiper.Services
                 var serializeOptions = new JsonSerializerOptions();
                 serializeOptions.Converters.Add(new StringConverterCustomization());
 
-                r = JsonSerializer.Deserialize<StatusRequestResponse>(result, serializeOptions);
+                r = JsonSerializer.Deserialize<Status>(result, serializeOptions);
             }
 
             if (r == null)
@@ -129,9 +128,9 @@ namespace PagHiper.Services
             return r.BankSlipResponse;
         }
 
-        private async Task<BankSlipResponse?> Cancel(ConsultRequest request)
+        private async Task<BankSlipResponse?> Cancel(Consult request)
         {
-            var r = new CancellationResponse();
+            var r = new Cancellation();
 
             using (var httpClient = new HttpClient())
             {
@@ -144,7 +143,7 @@ namespace PagHiper.Services
 
                 var result = await response.Content.ReadAsStringAsync();
 
-                r = JsonSerializer.Deserialize<CancellationResponse>(result);
+                r = JsonSerializer.Deserialize<Cancellation>(result);
             }
 
             if (r == null)
@@ -165,7 +164,7 @@ namespace PagHiper.Services
             return r;
         }
 
-        public BankSlipResponse ConsultBankSlip(ConsultRequest request)
+        public BankSlipResponse ConsultBankSlip(Consult request)
         {
             ValidateQuery(request);
 
@@ -177,7 +176,7 @@ namespace PagHiper.Services
             return r;
         }
 
-        public BankSlipResponse CancelBankSlip(ConsultRequest request)
+        public BankSlipResponse CancelBankSlip(Consult request)
         {
             ValidateQuery(request);
 

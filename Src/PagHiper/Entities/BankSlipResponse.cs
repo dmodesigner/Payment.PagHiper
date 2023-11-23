@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Responses
+namespace PagHiper.Entities
 {
     public class BankSlipResponse
     {
@@ -29,7 +29,7 @@ namespace PagHiper.Responses
         public DateTime DueDate { get; set; }
 
         [JsonPropertyName("bank_slip")]
-        public BankSlipInfoResponse? BankSlip { get; set; }
+        public BankSlip? BankSlip { get; set; }
 
         [JsonPropertyName("http_code")]
         public int HttpCode { get; set; }

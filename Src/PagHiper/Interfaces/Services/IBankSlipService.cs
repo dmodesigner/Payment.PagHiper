@@ -1,5 +1,4 @@
-﻿using PagHiper.Requests;
-using PagHiper.Responses;
+﻿using PagHiper.Entities;
 
 namespace PagHiper.Interfaces.Services
 {
@@ -7,8 +6,8 @@ namespace PagHiper.Interfaces.Services
     {
         BankSlipResponse CreateBankSlip(BankSlipRequest request);
 
-        BankSlipResponse ConsultBankSlip(ConsultRequest request);
+        BankSlipResponse ConsultBankSlip(Consult request);
 
-        BankSlipResponse CancelBankSlip(ConsultRequest request);
+        BankSlipResponse CancelBankSlip(Consult request);
     }
 }

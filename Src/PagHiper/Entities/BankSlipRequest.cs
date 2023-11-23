@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Requests
+namespace PagHiper.Entities
 {
     public class BankSlipRequest
     {
@@ -65,6 +65,6 @@ namespace PagHiper.Requests
         public string TypeBankSlip { get => "boletoA4"; }
 
         [JsonPropertyName("items")]
-        public List<ItemRequest>? Items { get; set; }
+        public List<Item>? Items { get; set; }
     }
 }

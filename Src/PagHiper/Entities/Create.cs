@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PagHiper.Responses
+namespace PagHiper.Entities
 {
-    public class CreateRequestResponse
+    public class Create
     {
         [JsonPropertyName("create_request")]
         public BankSlipResponse? BankSlipResponse { get; set; }
