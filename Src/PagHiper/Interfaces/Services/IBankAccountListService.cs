@@ -1,9 +1,8 @@
 ﻿using PagHiper.Entities;
 
-namespace PagHiper.Interfaces.Services
+namespace PagHiper.Interfaces.Services;
+
+public interface IBankAccountListService
 {
-    public interface IBankAccountListService
-    {
-        BankAccount BankAccountList(string token, string apiKey);
-    }
+    BankAccount BankAccountList(string token, string apiKey);
 }

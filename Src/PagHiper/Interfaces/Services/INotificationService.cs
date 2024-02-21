@@ -1,6 +1,5 @@
-﻿namespace PagHiper.Interfaces.Services
+﻿namespace PagHiper.Interfaces.Services;
+
+public interface INotificationService
 {
-    public interface INotificationService
-    {
-    }
 }
