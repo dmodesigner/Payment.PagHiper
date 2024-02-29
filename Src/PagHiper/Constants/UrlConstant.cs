@@ -1,6 +1,6 @@
 ﻿namespace PagHiper.Constants;
 
-public class UrlConstant
+internal class UrlConstant
 {
     public const string UrlBase = "https://api.paghiper.com/";
 
@@ -10,5 +10,5 @@ public class UrlConstant
 
     public const string Notification = UrlBase + "transaction/notification/";
 
-    public const string BankAccountList = UrlBase + "bamk_accounts/list/";
+    public const string BankAccountList = UrlBase + "bank_accounts/list/";
 }

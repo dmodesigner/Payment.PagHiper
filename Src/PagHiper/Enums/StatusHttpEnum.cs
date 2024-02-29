@@ -1,6 +1,6 @@
 ﻿namespace PagHiper.Enums;
 
-public enum StatusHttpEnum
+internal enum StatusHttpEnum
 {
     Ok = 200,
     Success = 201,

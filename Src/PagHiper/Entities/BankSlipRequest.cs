@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using PagHiper.Constants;
+using System.Text.Json.Serialization;
 
 namespace PagHiper.Entities;
 
@@ -20,7 +21,7 @@ public class BankSlipRequest
     public string? PayerCpfCnpj { get; set; }
 
     [JsonPropertyName("payer_phone")]
-    public int PayerPhone { get; set; }
+    public long PayerPhone { get; set; }
 
     [JsonPropertyName("payer_street")]
     public string? PayerStreet { get; set; }
@@ -62,7 +63,7 @@ public class BankSlipRequest
     public int DaysDueDate { get; set; }
 
     [JsonPropertyName("type_bank_slip")]
-    public string TypeBankSlip { get => "boletoA4"; }
+    public string TypeBankSlip { get => TypeBankConstant.BoletoA4; }
 
     [JsonPropertyName("items")]
     public List<Item>? Items { get; set; }

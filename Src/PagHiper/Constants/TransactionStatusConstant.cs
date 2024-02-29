@@ -1,6 +1,6 @@
 ﻿namespace PagHiper.Constants;
 
-public class TransactionStatusConstant
+internal class TransactionStatusConstant
 {
     public const string Pending = "pending";
     public const string Reserved = "reserved";

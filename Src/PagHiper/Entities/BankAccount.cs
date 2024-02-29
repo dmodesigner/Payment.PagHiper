@@ -14,5 +14,5 @@ public class BankAccount
     public List<Bank>? BankList { get; set; }
 
     [JsonPropertyName("http_code")]
-    public string? HttpCode { get; set; }
+    public int? HttpCode { get; set; }
 }

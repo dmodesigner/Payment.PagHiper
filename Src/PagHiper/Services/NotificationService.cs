@@ -1,7 +1,5 @@
-﻿using PagHiper.Interfaces.Services;
+﻿namespace PagHiper.Services;
 
-namespace PagHiper.Services;
-
-public class NotificationService : INotificationService
+public class NotificationService
 {
 }
